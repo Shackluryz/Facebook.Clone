@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "facebook-13924": {
+      "hosting": {
+        "facebook": [
+          "facebook-13924"
+        ]
+      }
+    }
+  }
+}
