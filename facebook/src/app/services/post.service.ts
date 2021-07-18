@@ -10,28 +10,25 @@ import {AngularFireAuth} from '@angular/fire/auth';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PostService {
   currentUser: User;
 
-  constructor(private afs: AngularFirestore,
-              private afAuth: AngularFireAuth,
-              private authService: AuthService) {
+  constructor(private afs: AngularFirestore,  private afAuth: AngularFireAuth, private authService: AuthService) {
     this.afAuth.authState.subscribe(user => this.currentUser = user);
   }
 
   getAllPosts(): Observable<any> {
-    return this.afs.collection<any>('posts', ref => ref.orderBy('time', 'desc'))
-      .snapshotChanges()
-      .pipe(
-        map(actions => {
-          return actions.map(item => {
-            return {
-              id: item.payload.doc.id,
-              ...item.payload.doc.data(),
-            };
-          });
-        })
-      );
+    return this.afs.collection<any>('posts', ref => ref.orderBy('time', 'desc')).snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(item => {
+          return {
+            id: item.payload.doc.id,
+            ...item.payload.doc.data(),
+          };
+        });
+      })
+    );
   }
 
   postMessage(message: string, ownerName: string, otherItem): void {
@@ -43,6 +40,4 @@ export class PostService {
       ...otherItem
     }).then(res => console.log(res));
   }
-
-
 }
